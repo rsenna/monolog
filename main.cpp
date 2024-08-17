@@ -2,19 +2,19 @@
 #include <cstdio>
 #include <string>
 #include <stdexcept>
-#include "../turtle/turtle.hpp"
-#include "../init/init_allegro.hpp"
-#include "../init/init_turtle.hpp"
-#include "../init/init_dispatch.hpp"
-#include "../runtime/wrappers.hpp"
-#include "../rendering/render_turtle.hpp"
-#include "../lang/args.hpp"
-#include "../lang/dispatch_table.hpp"
-#include "../lang/procedure.hpp"
-#include "../runtime/evaluator.hpp"
-#include "../lang/tokenizer.hpp"
-#include "../lang/ast_node.hpp"
-#include "../lang/parser.hpp"
+#include "./turtle/turtle.hpp"
+#include "./init/init_allegro.hpp"
+#include "./init/init_turtle.hpp"
+#include "./init/init_dispatch.hpp"
+#include "./runtime/wrappers.hpp"
+#include "./rendering/render_turtle.hpp"
+#include "./lang/args.hpp"
+#include "./lang/dispatch_table.hpp"
+#include "./lang/procedure.hpp"
+#include "./runtime/evaluator.hpp"
+#include "./lang/tokenizer.hpp"
+#include "./lang/ast_node.hpp"
+#include "./lang/parser.hpp"
 
 
 
@@ -25,14 +25,14 @@ int main(int argc, char *argv[]) {
 
     init_turtle(400, 400, 0, true);
     init_dispatch_table();
-    
+
     al_set_target_bitmap(draw_surface);
     al_clear_to_color(al_map_rgb(255, 255, 255));
     al_set_target_bitmap(al_get_backbuffer(display));
     al_draw_bitmap(draw_surface, 0, 0, 0);
     render_turtle(__turtle__);
     al_flip_display();
-    
+
 
     Tokenizer tok = Tokenizer();
 
@@ -49,14 +49,14 @@ int main(int argc, char *argv[]) {
             AstNode result = evaluate(root);
             std::cout << result << std::endl;
         }
-        
+
         al_set_target_bitmap(al_get_backbuffer(display));
         al_draw_bitmap(draw_surface, 0, 0, 0);
         render_turtle(__turtle__);
 
         al_flip_display();
     }
-    
+
 
     al_rest(5);
 
