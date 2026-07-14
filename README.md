@@ -1,16 +1,37 @@
-# logo
-An attempt to implement a Logo interpreter in C
+# monolog
 
-A full rewrite in C++ is planned, to simplify the process of working with more complex data structures such as Hash Table based components.
+monolog is an experimental Logo interpreter written in C++. It includes tokenization, parsing, procedure dispatch, evaluation, and Allegro-based turtle graphics, with unit-style test programs alongside the language components.
 
-## As of March 21, 2019
-This program has been completely rewritten in C++, and the majority of the language features should be functioning correctly, although haven't been thoroughly tested. User defined, and built in procedures are both working, as well as nested repeats and repcounts are all evaluated properly. I need to figure out how to save previous renderings so that they don't get wiped by Allegro whenever I call al_flip_display().
+## Technical stack
 
-## Installation/Dependencies
-The only dependency that this program really has is the Allegro5 library, the download instructions for which can be found [here](https://liballeg.org/download.html). Follow the instructions on the site for your specific platform (only tested on Linux and MacOS) and ensure that your compiler of choice knows where to find the headers.
+- C++17
+- GNU Make
+- Allegro 5 for windowing and turtle graphics
+- POSIX-oriented build commands
 
-## Compiling
-Within the /main subdirectory, invoking `make main` from the terminal should output a binary titled `main.out` which can then be invoked via ./main.out within any POSIX compliant shell. An allegro display will start up, with the turtle rendered in the middle of it, and you should be able to input Logo expressions in the terminal and have them evaluated. The `-lflags` in the Makefile include `-lallegro_main` which is needed to properly compile on MacOS systems. If you are not on MacOS, simply delete this flag. Also, the compilation flag `-std=c++17` is being used, although I am not actually leveraging any modern C++ features at this point in time, so you should be able to change this flag to point to an earlier version of the standard if you happen to have an out of date compiler, and things should still compile just fine.
+## Build and test
 
-## Future Improvements
-I need to add support for more built in language and graphics routines, such as setting colors for drawing. I am also going to look into improving the build system a bit so that there is less overhead involved in getting things installed and running on various platforms. This project was written for fun, and to see if I could port an earlier Python prototype Logo interpreter ito a working C/C++ version that uses a proper parser to parse the Logo expressions. I have worked on programming language interpreter projects in the past, having finished work on large parts of a mostly R7RS compliant Scheme interpreter roughly 1 year ago. Programming language theory and implementation is of great interest to me, and I have had much fun working on this Logo interpreter, and look forward to improving it in the future. Pull requests and issue requests are welcome from all who should choose to use this software.
+Install Allegro 5 and a C++17 compiler, then use the Makefiles in the component directories.
+
+```sh
+make -C lang token_test tokenizer_test arg_test args_test ast_node_test
+make -C main main
+```
+
+Run the generated `*_test.out` binaries after compilation. Exact targets vary by directory; inspect the local Makefile when working on a component.
+
+## Status
+
+Experimental and incomplete. Much of the interpreter pipeline exists, but the last development activity focused on parser errors and the project has no automated CI.
+
+## Known limitations
+
+- Build flags contain platform-specific Allegro assumptions.
+- Graphics state can be lost around display flips.
+- Built-in Logo vocabulary and graphics operations are incomplete.
+- Memory safety, malformed-input behavior, and cross-platform builds need more testing.
+- The repository uses hand-maintained Makefiles rather than a portable project generator.
+
+## Next steps
+
+Consolidate the build with CMake or Meson, add CI and sanitizer runs, formalize the supported Logo subset, improve parser diagnostics, preserve render state, and add integration tests for complete Logo programs.
