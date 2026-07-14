@@ -18,7 +18,7 @@ make -C lang token_test tokenizer_test arg_test args_test ast_node_test
 make -C main main
 ```
 
-Run the generated `*_test.out` binaries after compilation. Exact targets vary by directory; inspect the local Makefile when working on a component.
+Run the generated `lang/*_test.out` binaries after compilation. Exact targets vary by directory; inspect the local Makefile when working on a component.
 
 ## Status
 
